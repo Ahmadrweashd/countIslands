@@ -1,0 +1,44 @@
+<div style="margin-left: 20px">
+<button mat-button (click)="create()">
+  Ceate New Matrix
+  <mat-icon>add</mat-icon>
+</button>
+
+<button mat-button style="margin-left: 3px"    (click)="createDefault()">
+    Add Default Matrix 
+    <mat-icon>add</mat-icon>
+  </button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Date</th>
+      <th scope="col">Matrix</th>
+      <th scope="col" class="actions-cell">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let col of data; let i = index">
+      <th scope="row">{{i}}</th>
+      <td>{{col.date | date: 'dd/MM/yyyy'}}</td>
+      <td>
+      
+{{col.matrix}}
+
+      </td>
+      <td>
+        <!-- <button mat-icon-button (click)="edit(col._id)" [routerLink]="['/matrixlists', col._id]">
+          <mat-icon>edit</mat-icon>
+        </button> -->
+        <button title="Remove" mat-icon-button (click)="deleteRow(col._id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button title="Display , Update" mat-icon-button [routerLink]="['/matrixlists', col._id]">
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

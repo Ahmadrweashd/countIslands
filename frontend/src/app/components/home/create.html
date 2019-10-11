@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Create new Matrix</h1>
+<!-- <span class="right" title="Required Format [[0,0],[0,1]]">help</span> -->
+
+<div mat-dialog-content>
+  <mat-form-field style="display: inline;">
+    <input matInput placeholder="Matrix Format [ [0,0,0] , [0,1,1] , [1,0,1] ]" [(ngModel)]="data.newMatrix">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="noThanks()">No Thanks</button>
+  <button mat-button (click)="createNewMatrix(data.newMatrix)">Ok</button>
+</div>

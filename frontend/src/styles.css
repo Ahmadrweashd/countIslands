@@ -1,0 +1,98 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+html, body { height: 100%; }
+
+body { 
+    margin: 0; 
+    font-family: 'Roboto', sans-serif; 
+}
+.inline-block  {
+    display:inline-block;
+}
+.btn{
+    background-color: #f1f1f1;
+    border: 1px solid #d3d3d3;
+    text-align: center;
+}
+
+.maps-container {
+    display:block;
+    text-align: center;
+    margin-top:25px;
+}
+.map {
+    margin-bottom:25px;
+    position: relative;
+}
+
+.island {
+    width:50px;
+    height:50px;
+    background-color: brown;
+    cursor: pointer;
+}
+
+.water {
+    width:50px;
+    height:50px;
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.islandE{
+    margin-left: 20px;
+    width:50px;
+    height:30px;
+    background-color: brown;
+    cursor: pointer;
+    display : inline-block;
+    text-align: center
+}
+
+.waterE{
+    margin-left: 20px;
+    width:50px;
+    height:30px;
+    text-align: center;
+    background-color: aqua;
+    cursor: pointer;
+    display : inline-block;
+
+}
+
+.height50px {
+    height: 50px;;
+}
+
+.slider-columns {
+    position: absolute;
+    right: -40px;
+    top: 0px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slider-rows {
+    position: absolute;
+    top:-20px;
+}
+
+.rowscols-container {
+    display:inline-block;
+    position: relative;
+}
+.right{
+    margin-left: 80px;
+    margin-top: 10px;
+    font-size: small;
+}
+.rightbtn{
+    margin-left: 10px;
+    margin-top: 10px;
+    font-size: medium;
+}
+.actions-cell {
+    width: 104px;
+}
