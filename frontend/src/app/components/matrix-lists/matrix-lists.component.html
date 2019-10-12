@@ -4,17 +4,20 @@
 <div class="waterE">Water </div>
 <div class="maps-container">
   <div *ngFor="let matrix of matrixes; let i = index;" class="map">
-    <h5>Matrix number {{i}}</h5>
-    <h6>Islands count : {{getIslandCount(i)[0]}}</h6>
+    <h5 style="color:#032121">Matrix number {{i}}</h5>
+    <h6 class="titleBottom">Islands count : {{getIslandCount(i)[0]}}</h6>
 
     <div class="rowscols-container">
       <div class="slider-row">
-        <mat-slider (change)="changecols($event.value , i)" [max]="max" [min]="min" [step]="step"
-          [(ngModel)]="matrixinfo[i][0]"></mat-slider>
+        <mat-slider class="mat-slider-color" (change)="changecols($event.value , i)" [max]="max" [min]="min" [step]="step"
+          [(ngModel)]="matrixinfo[i][0]" [thumbLabel]="true"
+          ></mat-slider>
       </div>
       <div class="slider-columns">
+        
         <mat-slider [vertical]="true" [invert]="true" (change)="changerows($event.value, i)" [max]="max" [min]="min"
-          [step]="step" [(ngModel)]="matrixinfo[i][1]"></mat-slider>
+          [step]="step" [(ngModel)]="matrixinfo[i][1]"  [thumbLabel]="true"
+          ></mat-slider>
       </div>
       <div *ngFor="let inner of matrix; let j = index;" class="height50px">
         <div *ngFor="let num of inner; let k = index;" class="inline-block" (click)="modify(i, j, k)">
