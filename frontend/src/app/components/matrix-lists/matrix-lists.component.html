@@ -21,10 +21,10 @@
       </div>
       <div *ngFor="let inner of matrix; let j = index;" class="height50px">
         <div *ngFor="let num of inner; let k = index;" class="inline-block" (click)="modify(i, j, k)">
-          <div *ngIf="num == 1" class="island">
+          <div *ngIf="num == 1" class="island" title='click to swap to water'>
           {{(getIslandCount(i)[1])[j][k]}}
           </div>
-          <div *ngIf="num == 0" class="water">
+          <div *ngIf="num == 0" class="water" title="click to swap to island">
           </div>
         </div>
       </div>
