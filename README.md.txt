@@ -17,7 +17,9 @@ we have two options to count the islands:
 num of island in Normal Matrix = 3  (desc island1=[(0,0),(0,1)], island2=[(2,1)] , island3=[(0,4),(1,3),(1,4),(2,4)]
 num of island in World  Matrix = 1  ( because (0,0)is neighbor with (0,4)and(1,4) also (2,1) is neighbor with (0,0)and(0,1)
 
-
+*****styles****
+Angular Material 
+Bootstrap 
 
 Steps to run the project :
 ******MondoDb******
