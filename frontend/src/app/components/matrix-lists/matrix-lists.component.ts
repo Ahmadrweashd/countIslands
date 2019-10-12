@@ -4,7 +4,8 @@ import {
 } from '@angular/core';
 
 import {
-  Router, ActivatedRoute
+  Router,
+  ActivatedRoute
 } from '@angular/router';
 import {
   MatTableDataSource,
@@ -27,8 +28,8 @@ export class MatrixListsComponent implements OnInit {
   issues: Issue[];
   matrixes = [];
   matrixinfo = [];
-  isMatrixWorld=false;
-  matrixType="World";
+  isMatrixWorld = false;
+  matrixType = "World";
   displayedColumns = ['date', 'matrix', 'actions'];
   constructor(private route: ActivatedRoute, private issueService: IssueService, private router: Router, private snackbar: MatSnackBar) {
 
@@ -39,12 +40,12 @@ export class MatrixListsComponent implements OnInit {
     let id = this.route.snapshot.params['id'];
     this.fetchIssues(id);
   }
-  
+
   ////this function will get all the matrix from the server(mongoDB)
   ///and will create a new matrixInfo that saves the lengths of the matrixes 
   fetchIssues(id) {
     this.issueService.getIslands(id).subscribe((data) => {
-      console.log(data);      
+      console.log(data);
       this.issues = data;
       for (let i = 0; i < data.length; i++) {
         let tempMatrix = JSON.parse(data[i].matrix);
@@ -87,17 +88,16 @@ export class MatrixListsComponent implements OnInit {
       this.fetchIssues(0);
     })
   }
-  changeAlgorithm(){
-    if(this.isMatrixWorld==true){
-      this.isMatrixWorld=false;
-      this.matrixType="World";
+  changeAlgorithm() {
+    if (this.isMatrixWorld == true) {
+      this.isMatrixWorld = false;
+      this.matrixType = "World";
       this.snackbar.open("Normal Matrix", "close", {
         duration: 1000
       })
-    }
-    else{
-      this.isMatrixWorld=true;
-      this.matrixType="Normal";
+    } else {
+      this.isMatrixWorld = true;
+      this.matrixType = "Normal";
 
       this.snackbar.open("World Matrix ", "close", {
         duration: 1000
@@ -105,11 +105,10 @@ export class MatrixListsComponent implements OnInit {
     }
   }
   getIslandCount(i) {
-    if(this.isMatrixWorld==false) {
-    return numIslands(this.matrixes[i]);
-    }
-    else{
-    return numIslandsInWorld(this.matrixes[i]);
+    if (this.isMatrixWorld == false) {
+      return numIslands(this.matrixes[i]);
+    } else {
+      return numIslandsInWorld(this.matrixes[i]);
     }
   }
   max = 10;
@@ -121,26 +120,26 @@ export class MatrixListsComponent implements OnInit {
     let message;
     if (value > this.matrixes[index][0].length) {
       let count = value - this.matrixes[index][0].length;
-      message=count+ " columns was added by random values to the right side"
-      for (let i = 0; i< this.matrixes[index].length; i++) {
+      message = count + " columns was added by random values to the right side"
+      for (let i = 0; i < this.matrixes[index].length; i++) {
         for (let j = 0; j < count; j++) {
           let val = Math.floor(Math.random() * Math.floor(2));
-             this.matrixes[index][i].push(val);
+          this.matrixes[index][i].push(val);
         }
       }
 
-    }else{
-      let count =  this.matrixes[index][0].length -value;
-      message= count+ " columns  was removed from the right side"
-      for (let i = 0; i< this.matrixes[index].length; i++) {
+    } else {
+      let count = this.matrixes[index][0].length - value;
+      message = count + " columns  was removed from the right side"
+      for (let i = 0; i < this.matrixes[index].length; i++) {
         for (let j = 0; j < count; j++) {
-          console.log(  this.matrixes[index][i]);
-             this.matrixes[index][i].splice(-1,1);
+          console.log(this.matrixes[index][i]);
+          this.matrixes[index][i].splice(-1, 1);
         }
       }
     }
     this.issueService.UpdateIsland(this.issues[index]._id, new Date(), JSON.stringify(this.matrixes[index])).subscribe((data: any) => {
-      this.snackbar.open(message , "close", {
+      this.snackbar.open(message, "close", {
         duration: 1500
       })
     }, error => {
@@ -152,7 +151,7 @@ export class MatrixListsComponent implements OnInit {
     let message; /// this value to display the relevant message ( removed or added a new rows)
     if (value > this.matrixes[index].length) {
       let count = value - this.matrixes[index].length;
-      message=count+ " rows was added by random values to the bottom"
+      message = count + " rows was added by random values to the bottom"
       for (let i = 0; i < count; i++) {
         let arr = [];
         for (let j = 0; j < this.matrixes[index][0].length; j++) {
@@ -162,16 +161,16 @@ export class MatrixListsComponent implements OnInit {
         this.matrixes[index].push(arr);
       }
     } else {
-      let count =this.matrixes[index].length - value ; 
-      message=count+ " rows was removed from bottom"
+      let count = this.matrixes[index].length - value;
+      message = count + " rows was removed from bottom"
 
       for (let i = 0; i < count; i++) {
         this.matrixes[index].splice(-1, 1);
       }
-  
+
     }
     this.issueService.UpdateIsland(this.issues[index]._id, new Date(), JSON.stringify(this.matrixes[index])).subscribe((data: any) => {
-      this.snackbar.open(message , "close", {
+      this.snackbar.open(message, "close", {
         duration: 1500
       })
     }, error => {
@@ -180,92 +179,93 @@ export class MatrixListsComponent implements OnInit {
 
   }
 }
-let numIslandsInWorld = function(matrix) {
-  let markIslandInWorld = function(matrix, x, y, visited,displayIlands,count) {
-    if(x < 0 || x > matrix.length - 1 || y < 0 || y > matrix[x].length - 1) {
+let numIslandsInWorld = function (matrix) {
+  let markIslandInWorld = function (matrix, x, y, visited, displayIlands, count) {
+    if (x < 0 || x > matrix.length - 1 || y < 0 || y > matrix[x].length - 1) {
       return;
     }
-    if(visitedWorld[x][y] === true) {
+    if (visitedWorld[x][y] === true) {
       return;
     }
-    if(!visited[x][y] && matrix[x][y]=='1'){
-      displayIlands[x][y]=count;
-    }else{
-      displayIlands[x][y]='W';
+    if (!visited[x][y] && matrix[x][y] == '1') {
+      displayIlands[x][y] = count;
+    } else {
+      displayIlands[x][y] = 'W';
 
     }
     visitedWorld[x][y] = true;
-    if(matrix[x][y] == '0') {
+    if (matrix[x][y] == '0') {
       return;
     }
-    markIslandInWorld(matrix, x - 1, y, visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, x + 1, y, visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, x, y - 1, visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, x, y + 1, visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, x-1, y+1, visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, x +1,y+1, visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, x-1,  y-1,visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, x+1, y -1,visitedWorld,displayIlands,count);
-    if(x==0){
-      markIslandInWorld(matrix, matrix.length - 1, y, visitedWorld,displayIlands,count);
-      markIslandInWorld(matrix, matrix.length -1,y+1, visitedWorld,displayIlands,count);
-    markIslandInWorld(matrix, matrix.length -1,y-1, visitedWorld,displayIlands,count);
+    markIslandInWorld(matrix, x - 1, y, visitedWorld, displayIlands, count);
+    markIslandInWorld(matrix, x + 1, y, visitedWorld, displayIlands, count);
+    markIslandInWorld(matrix, x, y - 1, visitedWorld, displayIlands, count);
+    markIslandInWorld(matrix, x, y + 1, visitedWorld, displayIlands, count);
+    markIslandInWorld(matrix, x - 1, y + 1, visitedWorld, displayIlands, count);
+    markIslandInWorld(matrix, x + 1, y + 1, visitedWorld, displayIlands, count);
+    markIslandInWorld(matrix, x - 1, y - 1, visitedWorld, displayIlands, count);
+    markIslandInWorld(matrix, x + 1, y - 1, visitedWorld, displayIlands, count);
+    if (x == 0) {
+      markIslandInWorld(matrix, matrix.length - 1, y, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, matrix.length - 1, y + 1, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, matrix.length - 1, y - 1, visitedWorld, displayIlands, count);
     }
-    if(x==matrix.length - 1){
-      markIslandInWorld(matrix, 0, y, visitedWorld,displayIlands,count);
-      markIslandInWorld(matrix, 0,y+1, visitedWorld,displayIlands,count);
-      markIslandInWorld(matrix,0,y-1, visitedWorld,displayIlands,count);
+    if (x == matrix.length - 1) {
+      markIslandInWorld(matrix, 0, y, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, 0, y + 1, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, 0, y - 1, visitedWorld, displayIlands, count);
     }
-     if(y==0){
-      markIslandInWorld(matrix, x, matrix[x].length - 1, visitedWorld,displayIlands,count);
-      markIslandInWorld(matrix, x-1, matrix[x].length - 1, visitedWorld,displayIlands,count);
-      markIslandInWorld(matrix, x+1, matrix[x].length - 1, visitedWorld,displayIlands,count);
+    if (y == 0) {
+      markIslandInWorld(matrix, x, matrix[x].length - 1, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, x - 1, matrix[x].length - 1, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, x + 1, matrix[x].length - 1, visitedWorld, displayIlands, count);
     }
-    if(y==matrix[x].length - 1){
-      markIslandInWorld(matrix, x, 0, visitedWorld,displayIlands,count);
-      markIslandInWorld(matrix, x-1, 0, visitedWorld,displayIlands,count);
-      markIslandInWorld(matrix, x+1, 0, visitedWorld,displayIlands,count);
+    if (y == matrix[x].length - 1) {
+      markIslandInWorld(matrix, x, 0, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, x - 1, 0, visitedWorld, displayIlands, count);
+      markIslandInWorld(matrix, x + 1, 0, visitedWorld, displayIlands, count);
     }
   };
-    let visitedWorld = [];
-    let displayIlands=[];
+  let visitedWorld = [];
+  let displayIlands = [];
 
-    for(let i = 0; i < matrix.length; i++) {
-      visitedWorld[i] = [];
-      displayIlands[i]=[];
-    }
-    let count = 0;
-    for(let x = 0; x < matrix.length; x++) {
-      for(let y = 0; y < matrix[x].length; y++) {
-        if(!visitedWorld[x][y] && matrix[x][y] == '1') {
-          count++;
-          markIslandInWorld(matrix, x, y, visitedWorld,displayIlands,count);
-          displayIlands[x][y]=count;
+  for (let i = 0; i < matrix.length; i++) {
+    visitedWorld[i] = [];
+    displayIlands[i] = [];
+  }
+  let count = 0;
+  for (let x = 0; x < matrix.length; x++) {
+    for (let y = 0; y < matrix[x].length; y++) {
+      if (!visitedWorld[x][y] && matrix[x][y] == '1') {
+        count++;
+        markIslandInWorld(matrix, x, y, visitedWorld, displayIlands, count);
+        displayIlands[x][y] = count;
 
-        }
-        visitedWorld[x][y] = true;
       }
+      visitedWorld[x][y] = true;
     }
-    let res=[];
-    res.push(count , displayIlands);
-      return res;  };
+  }
+  let res = [];
+  res.push(count, displayIlands);
+  return res;
+};
 
 let numIslands = function (matrix) {
-  let markIsland = function (matrix, x, y, visited ,displayIlands,count) {
-   
- 
-   
+  let markIsland = function (matrix, x, y, visited, displayIlands, count) {
+
+
+
     if (x < 0 || x > matrix.length - 1 || y < 0 || y > matrix[x].length - 1) {
       return;
     }
     if (visited[x][y] === true) {
-    
+
       return;
     }
-    if(!visited[x][y] && matrix[x][y]=='1'){
-      displayIlands[x][y]=count;
-    }else{
-      displayIlands[x][y]='W';
+    if (!visited[x][y] && matrix[x][y] == '1') {
+      displayIlands[x][y] = count;
+    } else {
+      displayIlands[x][y] = 'W';
 
     }
 
@@ -274,37 +274,36 @@ let numIslands = function (matrix) {
     if (matrix[x][y] == '0') {
       return;
     }
-    markIsland(matrix, x - 1, y, visited,displayIlands,count);
-    markIsland(matrix, x + 1, y, visited,displayIlands,count);
-    markIsland(matrix, x, y - 1, visited,displayIlands,count);
-    markIsland(matrix, x, y + 1, visited,displayIlands,count);
-    markIsland(matrix, x-1, y+1, visited,displayIlands,count);
-    markIsland(matrix, x +1,y+1, visited,displayIlands,count);
-    markIsland(matrix, x-1,  y-1,visited,displayIlands,count);
-    markIsland(matrix, x+1, y -1,visited,displayIlands,count);
+    markIsland(matrix, x - 1, y, visited, displayIlands, count);
+    markIsland(matrix, x + 1, y, visited, displayIlands, count);
+    markIsland(matrix, x, y - 1, visited, displayIlands, count);
+    markIsland(matrix, x, y + 1, visited, displayIlands, count);
+    markIsland(matrix, x - 1, y + 1, visited, displayIlands, count);
+    markIsland(matrix, x + 1, y + 1, visited, displayIlands, count);
+    markIsland(matrix, x - 1, y - 1, visited, displayIlands, count);
+    markIsland(matrix, x + 1, y - 1, visited, displayIlands, count);
   };
 
   let visited = [];
-  let displayIlands=[];
+  let displayIlands = [];
   for (let i = 0; i < matrix.length; i++) {
     visited[i] = [];
-    displayIlands[i]=[];
+    displayIlands[i] = [];
   }
   let count = 0;
   for (let x = 0; x < matrix.length; x++) {
     for (let y = 0; y < matrix[x].length; y++) {
       if (!visited[x][y] && matrix[x][y] == '1') {
         count++;
-        markIsland(matrix, x, y, visited,displayIlands,count);
-        displayIlands[x][y]=count;
+        markIsland(matrix, x, y, visited, displayIlands, count);
+        displayIlands[x][y] = count;
       }
-      
+
       visited[x][y] = true;
     }
   }
 
-  let res=[];
-res.push(count , displayIlands);
+  let res = [];
+  res.push(count, displayIlands);
   return res;
 };
-
