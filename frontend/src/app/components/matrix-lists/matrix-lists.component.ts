@@ -91,13 +91,13 @@ export class MatrixListsComponent implements OnInit {
     if(this.isMatrixWorld==true){
       this.isMatrixWorld=false;
       this.matrixType="World";
-      this.snackbar.open("Regular Matrix", "close", {
+      this.snackbar.open("Normal Matrix", "close", {
         duration: 1000
       })
     }
     else{
       this.isMatrixWorld=true;
-      this.matrixType="Regular";
+      this.matrixType="Normal";
 
       this.snackbar.open("World Matrix ", "close", {
         duration: 1000
@@ -181,99 +181,130 @@ export class MatrixListsComponent implements OnInit {
   }
 }
 let numIslandsInWorld = function(gridWorld) {
-  let markIslandInWorld = function(gridWorld, x, y, visitedWorld) {
+  let markIslandInWorld = function(grid, x, y, visited,displayIlands,count) {
     if(x < 0 || x > gridWorld.length - 1 || y < 0 || y > gridWorld[x].length - 1) {
       return;
     }
     if(visitedWorld[x][y] === true) {
       return;
     }
+    if(!visited[x][y] && grid[x][y]=='1'){
+      displayIlands[x][y]=count;
+    }else{
+      displayIlands[x][y]='W';
+
+    }
     visitedWorld[x][y] = true;
     if(gridWorld[x][y] == '0') {
       return;
     }
-    markIslandInWorld(gridWorld, x - 1, y, visitedWorld);
-    markIslandInWorld(gridWorld, x + 1, y, visitedWorld);
-    markIslandInWorld(gridWorld, x, y - 1, visitedWorld);
-    markIslandInWorld(gridWorld, x, y + 1, visitedWorld);
-    markIslandInWorld(gridWorld, x-1, y+1, visitedWorld);
-    markIslandInWorld(gridWorld, x +1,y+1, visitedWorld);
-    markIslandInWorld(gridWorld, x-1,  y-1,visitedWorld);
-    markIslandInWorld(gridWorld, x+1, y -1,visitedWorld);
+    markIslandInWorld(gridWorld, x - 1, y, visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, x + 1, y, visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, x, y - 1, visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, x, y + 1, visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, x-1, y+1, visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, x +1,y+1, visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, x-1,  y-1,visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, x+1, y -1,visitedWorld,displayIlands,count);
     if(x==0){
-      markIslandInWorld(gridWorld, gridWorld.length - 1, y, visitedWorld);
-      markIslandInWorld(gridWorld, gridWorld.length -1,y+1, visitedWorld);
-    markIslandInWorld(gridWorld, gridWorld.length -1,y-1, visitedWorld);
+      markIslandInWorld(gridWorld, gridWorld.length - 1, y, visitedWorld,displayIlands,count);
+      markIslandInWorld(gridWorld, gridWorld.length -1,y+1, visitedWorld,displayIlands,count);
+    markIslandInWorld(gridWorld, gridWorld.length -1,y-1, visitedWorld,displayIlands,count);
     }
     if(x==gridWorld.length - 1){
-      markIslandInWorld(gridWorld, 0, y, visitedWorld);
-      markIslandInWorld(gridWorld, 0,y+1, visitedWorld);
-      markIslandInWorld(gridWorld,0,y-1, visitedWorld);
+      markIslandInWorld(gridWorld, 0, y, visitedWorld,displayIlands,count);
+      markIslandInWorld(gridWorld, 0,y+1, visitedWorld,displayIlands,count);
+      markIslandInWorld(gridWorld,0,y-1, visitedWorld,displayIlands,count);
     }
      if(y==0){
-      markIslandInWorld(gridWorld, x, gridWorld[x].length - 1, visitedWorld);
-      markIslandInWorld(gridWorld, x-1, gridWorld[x].length - 1, visitedWorld);
-      markIslandInWorld(gridWorld, x+1, gridWorld[x].length - 1, visitedWorld);
+      markIslandInWorld(gridWorld, x, gridWorld[x].length - 1, visitedWorld,displayIlands,count);
+      markIslandInWorld(gridWorld, x-1, gridWorld[x].length - 1, visitedWorld,displayIlands,count);
+      markIslandInWorld(gridWorld, x+1, gridWorld[x].length - 1, visitedWorld,displayIlands,count);
     }
     if(y==gridWorld[x].length - 1){
-      markIslandInWorld(gridWorld, x, 0, visitedWorld);
-      markIslandInWorld(gridWorld, x-1, 0, visitedWorld);
-      markIslandInWorld(gridWorld, x+1, 0, visitedWorld);
+      markIslandInWorld(gridWorld, x, 0, visitedWorld,displayIlands,count);
+      markIslandInWorld(gridWorld, x-1, 0, visitedWorld,displayIlands,count);
+      markIslandInWorld(gridWorld, x+1, 0, visitedWorld,displayIlands,count);
     }
   };
     let visitedWorld = [];
+    let displayIlands=[];
+
     for(let i = 0; i < gridWorld.length; i++) {
       visitedWorld[i] = [];
+      displayIlands[i]=[];
     }
     let count = 0;
     for(let x = 0; x < gridWorld.length; x++) {
       for(let y = 0; y < gridWorld[x].length; y++) {
         if(!visitedWorld[x][y] && gridWorld[x][y] == '1') {
           count++;
-          markIslandInWorld(gridWorld, x, y, visitedWorld);
+          markIslandInWorld(gridWorld, x, y, visitedWorld,displayIlands,count);
+          displayIlands[x][y]=count;
+
         }
         visitedWorld[x][y] = true;
       }
     }
-    return count;
-  };
+    let res=[];
+    res.push(count , displayIlands);
+      return res;  };
 
 let numIslands = function (grid) {
-  let markIsland = function (grid, x, y, visited) {
+  let markIsland = function (grid, x, y, visited ,displayIlands,count) {
+   
+ 
+   
     if (x < 0 || x > grid.length - 1 || y < 0 || y > grid[x].length - 1) {
       return;
     }
     if (visited[x][y] === true) {
+    
       return;
     }
+    if(!visited[x][y] && grid[x][y]=='1'){
+      displayIlands[x][y]=count;
+    }else{
+      displayIlands[x][y]='W';
+
+    }
+
     visited[x][y] = true;
+
     if (grid[x][y] == '0') {
       return;
     }
-    markIsland(grid, x - 1, y, visited);
-    markIsland(grid, x + 1, y, visited);
-    markIsland(grid, x, y - 1, visited);
-    markIsland(grid, x, y + 1, visited);
-    markIsland(grid, x-1, y+1, visited);
-    markIsland(grid, x +1,y+1, visited);
-    markIsland(grid, x-1,  y-1,visited);
-    markIsland(grid, x+1, y -1,visited);
+    markIsland(grid, x - 1, y, visited,displayIlands,count);
+    markIsland(grid, x + 1, y, visited,displayIlands,count);
+    markIsland(grid, x, y - 1, visited,displayIlands,count);
+    markIsland(grid, x, y + 1, visited,displayIlands,count);
+    markIsland(grid, x-1, y+1, visited,displayIlands,count);
+    markIsland(grid, x +1,y+1, visited,displayIlands,count);
+    markIsland(grid, x-1,  y-1,visited,displayIlands,count);
+    markIsland(grid, x+1, y -1,visited,displayIlands,count);
   };
 
   let visited = [];
+  let displayIlands=[];
   for (let i = 0; i < grid.length; i++) {
     visited[i] = [];
+    displayIlands[i]=[];
   }
   let count = 0;
   for (let x = 0; x < grid.length; x++) {
     for (let y = 0; y < grid[x].length; y++) {
       if (!visited[x][y] && grid[x][y] == '1') {
         count++;
-        markIsland(grid, x, y, visited);
+        markIsland(grid, x, y, visited,displayIlands,count);
+        displayIlands[x][y]=count;
       }
+      
       visited[x][y] = true;
     }
   }
-  return count;
+
+  let res=[];
+res.push(count , displayIlands);
+  return res;
 };
 
